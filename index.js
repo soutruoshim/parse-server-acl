@@ -24,7 +24,8 @@ export const config = {
   restAPIKey: process.env.REST_API_KEY || 'Z5KbbHUDH89Wu4PwnVS5Hj8QkpC57nWvk2PrBdNqJSk5tEyt9sdev',
   serverURL: process.env.SERVER_URL || 'http://localhost:1337/parse', // Don't forget to change to https if needed
   publicServerURL: process.env.SERVER_URL || 'http://localhost:1337/parse', 
-  allowClientClassCreation: true,
+  allowClientClassCreation: false,
+  enforcePrivateUsers: true,
   liveQuery: {
     classNames: ['Posts', 'Comments','Orders'], // List of classes to support for query subscriptions
   },
