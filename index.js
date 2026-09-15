@@ -1,22 +1,35 @@
 // Example express application adding the parse-server module to expose Parse
 // compatible API routes.
-
+import dotenv from 'dotenv';
 import express from 'express';
 import { ParseServer } from 'parse-server';
 import path from 'path';
 const __dirname = path.resolve();
 import http from 'http';
 
+dotenv.config();
+
+
+console.log('Master Key:', process.env.MASTER_KEY ? process.env.MASTER_KEY : 'Not set'); 
+console.log('Server url Key:', process.env.SERVER_URL ? process.env.SERVER_URL : 'Not set'); 
+console.log('Appid  Key:', process.env.APP_ID ? process.env.APP_ID : 'Not set'); 
+ 
+
 export const config = {
-  databaseURI:
-    process.env.DATABASE_URI || process.env.MONGODB_URI || 'mongodb://localhost:27017/dev',
-  cloud: process.env.CLOUD_CODE_MAIN || __dirname + '/cloud/main.js',
+  databaseURI:process.env.DATABASE_URI || process.env.MONGODB_URI || 'mongodb://localhost:27017/dev',
+  cloud: __dirname + '/cloud/main.js',
   appId: process.env.APP_ID || 'myAppId',
   masterKey: process.env.MASTER_KEY || '', //Add your master key here. Keep it secret!
+  clientKey: process.env.CLIENT_KEY || '',
+  restAPIKey: process.env.REST_API_KEY || 'Z5KbbHUDH89Wu4PwnVS5Hj8QkpC57nWvk2PrBdNqJSk5tEyt9sdev',
   serverURL: process.env.SERVER_URL || 'http://localhost:1337/parse', // Don't forget to change to https if needed
+  publicServerURL: process.env.SERVER_URL || 'http://localhost:1337/parse', 
+  allowClientClassCreation: true,
   liveQuery: {
-    classNames: ['Posts', 'Comments'], // List of classes to support for query subscriptions
+    classNames: ['Posts', 'Comments','Orders'], // List of classes to support for query subscriptions
   },
+  masterKeyIps: ['0.0.0.0/0', '::/0'], // Allow all IPs 
+  //masterKeyIps: ['::ffff:192.168.153.11', '127.0.0.1', '::1'], 
 };
 // Client-keys like the javascript key or the .NET key are not necessary with parse-server
 // If you wish you require them, you can set them as options in the initialization above:
